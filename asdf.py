@@ -39,15 +39,18 @@ class Image:
         
 
 
-class MNIST_Dataset:
+class mnistDataset: #namespace 
     training_data = []
     training_labels = []
+
+    validation_data = []
+    validation_labels = []
 
     test_data = []
     test_labels = []
 
 
-def MNIST_DataReader(filepath_data, filepath_lbls, arr_data, arr_lbls):
+def mnistLoader(filepath_data, filepath_lbls, arr_data, arr_lbls):
 
     data_file  = open(filepath_data, "r")
     
@@ -68,21 +71,25 @@ def MNIST_DataReader(filepath_data, filepath_lbls, arr_data, arr_lbls):
 
 
 
-def nt_Read_DigitData_Test(file_data, file_labels):
-    data_file  = open(os.path.join(A4_PATH, "data/data/digitdata/testimages"), "r")
-    lbls_file  = open(os.path.join(A4_PATH, "data/data/digitdata/testlabels"), "r")
+def nt_ReadDigitData_Test():
+    data_filepath  = os.path.join(A4_PATH, "data/data/digitdata/testimages")
+    lbls_filepath  = os.path.join(A4_PATH, "data/data/digitdata/testlabels")
 
-    while True:
-        label = [int(x) for x in lbls_file.readline().split()]
+    mnistLoader(data_filepath, lbls_filepath, mnistDataset.test_data, mnistDataset.test_labels)
 
-        image_array2d = []
 
-        for row in range(28):
-            image_row = data_file.readline()
-            image_array2d.insert(image_row)
+def nt_ReadDigitData_Train():
+    data_filepath  = os.path.join(A4_PATH, "data/data/digitdata/trainingimages")
+    lbls_filepath  = os.path.join(A4_PATH, "data/data/digitdata/traininglabels")
 
-        
+    mnistLoader(data_filepath, lbls_filepath, mnistDataset.training_data, mnistDataset.training_labels)    
 
+
+def nt_ReadDigitData_Valid():
+    data_filepath  = os.path.join(A4_PATH, "data/data/digitdata/validationimages")
+    lbls_filepath  = os.path.join(A4_PATH, "data/data/digitdata/validationlabels")
+
+    mnistLoader(data_filepath, lbls_filepath, mnistDataset.validation_data, mnistDataset.validation_labels) 
     
 
     
