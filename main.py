@@ -3,12 +3,15 @@
 import sys, os
 
 
-import loader
+import loader, features
 
 loader.nt_loadall()
 
-loader.mnistDataset.test_data[0].print()
-loader.faceDataset.test_data[0].print()
+features.mnistFeaturesInit()
+
+
+#loader.mnistDataset.test_data[0].print()
+#loader.faceDataset.test_data[0].print()
 
 quit()
 

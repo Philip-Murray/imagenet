@@ -1,9 +1,9 @@
 from loader import AsciImage
+import loader
 
-import numpy
+import numpy as np
 
 def mnistFeatureExtraction(img: AsciImage):
-    flat_pixels = [pixel for img_row in img.pixels for pixel in img.pixels]
     def charmap(c: str):
         if c == " ":
             return 0
@@ -11,7 +11,7 @@ def mnistFeatureExtraction(img: AsciImage):
             return 1
         if c == "+":
             return 1
-    return map(lambda c: charmap(c), flat_pixels) #Must be same size for any img in mnist set
+    return [charmap(pixel) for img_row in img.pixels for pixel in img.pixels] #Must be same size for any img in mnist set
     
 
 def faceFeatureExtraction(img: AsciImage):
@@ -53,8 +53,14 @@ class faceDataset:
     Y_test = None
 
 
-def mnistProcess():
+def mnistFeaturesInit():
+    list = [ mnistFeatureExtraction(img) for img in loader.mnistDataset.test_data]
     
+    print(len(list))
+    print(len(list[0]))
+
+    for i in range(28):
+        print(list[i:i, 0:28])
 
 def init():
     pass

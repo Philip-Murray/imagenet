@@ -15,33 +15,24 @@ class AsciImage:
 
 class mnistDataset: #namespace 
     training_data = []
-    training_labels = []
-
     validation_data = []
-    validation_labels = []
-
     test_data = []
-    test_labels = []
 
     dim_y = 28
     dim_x = 28
 
+
 class faceDataset: #namespace
     training_data = []
-    training_labels = []
-
     validation_data = []
-    validation_labels = []
-
     test_data = []
-    test_labels = []
 
     dim_x = 60
     dim_y = 70
 
 
 
-def imageLoader(imgdim_y: int, filepath_data: str, filepath_lbls: str, arr_data, arr_lbls):
+def imageLoader(imgdim_y: int, filepath_data: str, filepath_lbls: str, arr_data):
     data_file  = open(filepath_data, "r")
 
     with open(filepath_lbls, "r") as lbls_file:
@@ -66,19 +57,19 @@ def nt_ReadDigitData_Train():
     data_filepath  = os.path.join(A4_PATH, "data/data/digitdata/trainingimages")
     lbls_filepath  = os.path.join(A4_PATH, "data/data/digitdata/traininglabels")
 
-    imageLoader(mnistDataset.dim_y, data_filepath, lbls_filepath, mnistDataset.training_data, mnistDataset.training_labels)    
+    imageLoader(mnistDataset.dim_y, data_filepath, lbls_filepath, mnistDataset.training_data)    
 
 def nt_ReadDigitData_Valid():
     data_filepath  = os.path.join(A4_PATH, "data/data/digitdata/validationimages")
     lbls_filepath  = os.path.join(A4_PATH, "data/data/digitdata/validationlabels")
 
-    imageLoader(mnistDataset.dim_y, data_filepath, lbls_filepath, mnistDataset.validation_data, mnistDataset.validation_labels) 
+    imageLoader(mnistDataset.dim_y, data_filepath, lbls_filepath, mnistDataset.validation_data) 
 
 def nt_ReadDigitData_Test():
     data_filepath  = os.path.join(A4_PATH, "data/data/digitdata/testimages")
     lbls_filepath  = os.path.join(A4_PATH, "data/data/digitdata/testlabels")
 
-    imageLoader(mnistDataset.dim_y, data_filepath, lbls_filepath, mnistDataset.test_data, mnistDataset.test_labels)
+    imageLoader(mnistDataset.dim_y, data_filepath, lbls_filepath, mnistDataset.test_data)
 
 
 #FACE DATA ---
@@ -86,19 +77,19 @@ def nt_ReadFaceData_Train():
     data_filepath  = os.path.join(A4_PATH, "data/data/facedata/facedatatrain")
     lbls_filepath  = os.path.join(A4_PATH, "data/data/facedata/facedatatrainlabels")
 
-    imageLoader(faceDataset.dim_y, data_filepath, lbls_filepath, faceDataset.training_data, faceDataset.training_labels)    
+    imageLoader(faceDataset.dim_y, data_filepath, lbls_filepath, faceDataset.training_data)    
 
 def nt_ReadFaceData_Test():
     data_filepath  = os.path.join(A4_PATH, "data/data/facedata/facedatavalidation")
     lbls_filepath  = os.path.join(A4_PATH, "data/data/facedata/facedatavalidationlabels")
 
-    imageLoader(faceDataset.dim_y, data_filepath, lbls_filepath, faceDataset.test_data, faceDataset.test_labels)
+    imageLoader(faceDataset.dim_y, data_filepath, lbls_filepath, faceDataset.test_data)
 
 def nt_ReadFaceData_Valid():
     data_filepath  = os.path.join(A4_PATH, "data/data/facedata/facedatatest")
     lbls_filepath  = os.path.join(A4_PATH, "data/data/facedata/facedatatestlabels")
 
-    imageLoader(faceDataset.dim_y, data_filepath, lbls_filepath, faceDataset.validation_data, faceDataset.validation_labels) 
+    imageLoader(faceDataset.dim_y, data_filepath, lbls_filepath, faceDataset.validation_data) 
 
 
 
