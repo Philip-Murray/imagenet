@@ -3,6 +3,15 @@
 import sys, os
 
 
+import loader
+
+loader.nt_loadall()
+
+loader.mnistDataset.test_data[0].print()
+loader.faceDataset.test_data[0].print()
+
+quit()
+
 A4_PATH = os.path.dirname(os.path.realpath(__file__))
 
 fn  = os.path.join(A4_PATH, "data/data/facedata/facedatatrain")
