@@ -7,7 +7,7 @@ import loader, features
 
 loader.nt_loadall()
 
-features.mnistFeaturesInit()
+features.init()
 
 
 #loader.mnistDataset.test_data[0].print()
