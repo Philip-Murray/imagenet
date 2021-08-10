@@ -14,18 +14,62 @@ def mnistFeatureExtraction(img: AsciImage):
     return [charmap(pixel) for img_row in img.pixels for pixel in img_row] #Must be same size for any img in mnist set
     
 
+class faceConversionVars:
+    x_div = 10
+    y_div = 10
+
+    x_boxamt = None
+    y_boxamt = None
+
+    def setup():
+        fcv = faceConversionVars
+        fcv.x_boxamt = int(loader.faceDataset.dim_x / fcv.x_div)
+        fcv.y_boxamt = int(loader.faceDataset.dim_y / fcv.y_div)
+
+    is_setup = False
+
+
 def faceFeatureExtraction(img: AsciImage):
+    
+    if not faceConversionVars.is_setup:
+        faceConversionVars.setup()
+    
     def charmap(c: str):
         if c == " ":
             return 0
         if c == "#":
             return 1
-    return [charmap(pixel) for img_row in img.pixels for pixel in img_row] #Must be same size for any img in face set
+    mapping = [[charmap(c) for c in img_row] for img_row in img.pixels]
+
+    x_div = 10
+    y_div = 10
+    x_boxamt = int(loader.faceDataset.dim_x / x_div)
+    y_boxamt = int(loader.faceDataset.dim_y / y_div)
+
+    tiles = []
+    
+
+    for ybox in range(y_boxamt):
+        tiles.append([])
+        for xbox in range(x_boxamt):
+            sum = 0
+            for y in range(ybox*y_div, (1+ybox)*y_div):
+                for x in range(xbox*x_div, (1+xbox)*x_div):
+                    sum += mapping[y][x]
+            avg = sum / (y_div*x_div)
+            tiles[ybox].append(avg)
+
+
+    return [aggregate for boxed_row in tiles for aggregate in boxed_row] #Must be same size for any img in face set
+
+
 
 
 
 class mnist:
     featureVectorSize = None
+    dim_x = None
+    dim_y = None
 
     X_train = None
     Y_train = None
@@ -35,6 +79,11 @@ class mnist:
 
     X_test = None
     Y_test = None
+
+    def printImage(index: int, set="train"):
+        if set == "train" or set == 0:
+
+        
         
 
 class faces:
@@ -73,16 +122,16 @@ def init():
     
     _, faces.featureVectorSize = faces.X_train.shape
 
-    if False:
-        print(mnistDataset.X_train.shape)
-        print(mnistDataset.X_valid.shape)
-        print(mnistDataset.X_test.shape)
+    if True:
+        print(mnist.X_train.shape)
+        print(mnist.X_valid.shape)
+        print(mnist.X_test.shape)
 
-        print(faceDataset.X_train.shape)
-        print(faceDataset.X_valid.shape)
-        print(faceDataset.X_test.shape)
+        print(faces.X_train.shape)
+        print(faces.X_valid.shape)
+        print(faces.X_test.shape)
 
-        print(faceDataset.featureVectorSize)
+        print(faces.featureVectorSize)
     
     #for i in range(28):
         #print(list[0, i*(28) : (i+1)*28])
