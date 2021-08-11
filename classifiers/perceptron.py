@@ -1,33 +1,6 @@
 from model import *
 import numpy as np
 
-class Model:
-    def __init__(self, inVectorSize: int, outVectorSize: int):
-        self.features = inVectorSize
-        self.classifications = outVectorSize
-
-    def assert_inputdim(self, f: int):
-        if self.features == f:
-            return
-        print("Model input length is "+str(self.features)+", given dataset with "+str(f))
-
-
-    def fit(self, X_set, Y_set, epochs, report_progress=True):
-        pass
-
-    def accuracy_test(self, X_set, Y_set, report_progress=True):
-        for index in range(Y_set.shape[0]):
-            pass
-
-
-    def predict_batch(self, X_set, Y_set, report_progress=True):
-        pass
-
-    def predict(self, X):
-        pass
-
-
-
 class BinaryPerceptron(Model):
 
     def __init__(self, inVectorSize):
@@ -57,7 +30,7 @@ class BinaryPerceptron(Model):
                     self.bias += lrn
                     self.weight_v = self.weight_v + lrn * X_set[b]
                 else:
-                    self.bias -= 0.01
+                    self.bias -= lrn
                     self.weight_v = self.weight_v - lrn * X_set[b]
 
 
@@ -110,7 +83,6 @@ class MultiPerceptron(Model):
                 self.weight_m[Y_set[b]] += lrn * X_set[b]
 
 
-
     def accuracy_test(self, X_set, Y_set, report_progress=True):
         error_sum = 0
         for b in range(Y_set.shape[0]):
@@ -122,7 +94,8 @@ class MultiPerceptron(Model):
     def predict_batch(self, X_set, Y_set, report_progress=True):
         preds = []
         for b in range(X_set.shape(0)):
-            preds.append(self.predict(X_set[b]))
+            pred = self.predict(X_set[b])
+            preds.append(pred)
 
         return np.array(preds)
 

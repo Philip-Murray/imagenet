@@ -44,9 +44,13 @@ def faceFeatureExtraction(img: AsciImage):
             for y in range(ybox*y_div, (1+ybox)*y_div):
                 for x in range(xbox*x_div, (1+xbox)*x_div):
                     sum += mapping[y][x]
-            avg = sum / (y_div*x_div)
+            if(sum > 3):
+                sum = 1
+            else:
+                sum = 0
+
             #avg = min(sum, 9)
-            tiles[ybox].append(avg)
+            tiles[ybox].append(sum)
 
     return [aggregate for boxed_row in tiles for aggregate in boxed_row] #Must be same size for any img in face set
 

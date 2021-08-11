@@ -1,5 +1,5 @@
 
-
+import numpy as np
 def ErrorFunction():
     pass
     
@@ -8,6 +8,14 @@ class Model:
     def __init__(self, inVectorSize: int, outVectorSize: int):
         self.features = inVectorSize
         self.classifications = outVectorSize
+
+    def predict_batch(self, X_set, Y_set, report_progress=True):
+        preds = []
+        for b in range(X_set.shape(0)):
+            pred = self.predict(X_set[b])
+            preds.append(pred)
+
+        return np.array(preds)
 
     def assert_inputdim(self, f: int):
         if self.features == f:
@@ -22,9 +30,6 @@ class Model:
         for index in range(Y_set.shape[0]):
             pass
 
-
-    def predict_batch(self, X_set, Y_set, report_progress=True):
-        pass
 
     def predict(X):
         pass
