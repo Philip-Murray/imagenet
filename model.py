@@ -1,8 +1,6 @@
 
 import numpy as np
-def ErrorFunction():
-    pass
-    
+
 
 class Model:
     def __init__(self, inVectorSize: int, outVectorSize: int):
@@ -17,19 +15,19 @@ class Model:
 
         return np.array(preds)
 
-    def assert_inputdim(self, f: int):
-        if self.features == f:
-            return
-        print("Model input length is "+str(self.features)+", given dataset with "+str(f))
+    def accuracy_test(self, X_set, Y_set, report_progress=True):
+        error_sum = 0
+        for b in range(Y_set.shape[0]):
+            pred = self.predict(X_set[b])
+            if pred != Y_set[b]:
+                error_sum += 1
+        return error_sum / Y_set.shape[0]
 
-
-    def fit(self, X_set, Y_set, epochs, report_progress=True, collect_accuracy=True,):
+    def dims_assert(self, X_set, Y_set):
         pass
 
-    def accuracy_test(self, X_set, Y_set, report_progress=True):
-        for index in range(Y_set.shape[0]):
-            pass
-
+    def fit(self, X_set, Y_set, epochs, report_progress=True, collect_accuracy=True):
+        pass
 
     def predict(X):
         pass

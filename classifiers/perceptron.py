@@ -35,24 +35,6 @@ class BinaryPerceptron(Model):
 
 
 
-    def accuracy_test(self, X_set, Y_set, report_progress=True):
-        error_sum = 0
-        for b in range(Y_set.shape[0]):
-            pred = self.predict(X_set[b])
-            if pred != Y_set[b]:
-                error_sum += 1
-        return error_sum / Y_set.shape[0]
-        
-    def predict_batch(self, X_set, Y_set, report_progress=True):
-        preds = []
-        for b in range(X_set.shape(0)):
-            preds.append(self.predict(X_set[b]))
-
-        return np.array(preds)
-
-
-
-
 
 class MultiPerceptron(Model):
 
@@ -81,23 +63,6 @@ class MultiPerceptron(Model):
 
                 self.bias_v[Y_set[b]] += lrn
                 self.weight_m[Y_set[b]] += lrn * X_set[b]
-
-
-    def accuracy_test(self, X_set, Y_set, report_progress=True):
-        error_sum = 0
-        for b in range(Y_set.shape[0]):
-            pred = self.predict(X_set[b])
-            if pred != Y_set[b]:
-                error_sum += 1
-        return error_sum / Y_set.shape[0]
-        
-    def predict_batch(self, X_set, Y_set, report_progress=True):
-        preds = []
-        for b in range(X_set.shape(0)):
-            pred = self.predict(X_set[b])
-            preds.append(pred)
-
-        return np.array(preds)
 
     
 
