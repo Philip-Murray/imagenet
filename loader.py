@@ -52,7 +52,7 @@ def imageLoader(imgdim_y: int, filepath_data: str, filepath_lbls: str, arr_data)
 
 
 
-#DIGIT DATA --- db class must be converted to an instance of that class before usage, mnistDataset must be instance of mnistDataset
+#DIGIT DATA --- 
 def nt_ReadDigitData_Train():
     data_filepath  = os.path.join(A4_PATH, "data/data/digitdata/trainingimages")
     lbls_filepath  = os.path.join(A4_PATH, "data/data/digitdata/traininglabels")
@@ -94,8 +94,6 @@ def nt_ReadFaceData_Valid():
 
 
 def nt_init():
-    mnistDataset 
-
     nt_ReadDigitData_Train()
     nt_ReadDigitData_Valid()
     nt_ReadDigitData_Test()
