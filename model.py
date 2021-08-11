@@ -1,27 +1,33 @@
 
 
-
+def ErrorFunction():
+    pass
     
 
 class Model:
+    def __init__(self, inVectorSize: int, outVectorSize: int):
+        self.features = inVectorSize
+        self.classifications = outVectorSize
+
+    def assert_inputdim(self, f: int):
+        if self.features == f:
+            return
+        print("Model input length is "+str(self.features)+", given dataset with "+str(f))
 
 
-
-    def __init__(self, model, X_set, Y_set):
-        self.model = model
-        self.X_set = X_set
-        self.Y_set = Y_set
-
-    def fit(X_set, Y_set, epochs, report_progress=True):
+    def fit(self, X_set, Y_set, epochs, report_progress=True, collect_accuracy=True,):
         pass
 
-    def accuracy_test(X_set, Y_set, report_progress=True):
+    def accuracy_test(self, X_set, Y_set, report_progress=True):
+        for index in range(Y_set.shape[0]):
+            pass
+
+
+    def predict_batch(self, X_set, Y_set, report_progress=True):
         pass
 
-    def predict_batch(X_set, Y_set, report_progress=True):
+    def predict(X):
         pass
-
-    def predict(X_set, Y_set, report_progress=True):
 
     
 

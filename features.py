@@ -45,7 +45,7 @@ def faceFeatureExtraction(img: AsciImage):
                 for x in range(xbox*x_div, (1+xbox)*x_div):
                     sum += mapping[y][x]
             avg = sum / (y_div*x_div)
-            avg = min(sum, 9)
+            #avg = min(sum, 9)
             tiles[ybox].append(avg)
 
     return [aggregate for boxed_row in tiles for aggregate in boxed_row] #Must be same size for any img in face set
@@ -113,11 +113,15 @@ class faces:
             printNumpySubset(faces.X_test,  index, faces.dim_x, faces.dim_y)
 
 
-def init():
+def init(): #Has hardcode hardcoded value
 
     mnist.X_train = np.array([ mnistFeatureExtraction(img) for img in loader.mnistDataset.training_data])
     mnist.X_valid = np.array([ mnistFeatureExtraction(img) for img in loader.mnistDataset.validation_data])
     mnist.X_test  = np.array([ mnistFeatureExtraction(img) for img in loader.mnistDataset.test_data])
+
+    #mnist.Y_train = np.array([ [1 if x==img.label else 0 for x in range(10)] for img in loader.mnistDataset.training_data])
+    #mnist.Y_valid = np.array([ [1 if x==img.label else 0 for x in range(10)] for img in loader.mnistDataset.validation_data])
+    #mnist.Y_test  = np.array([ [1 if x==img.label else 0 for x in range(10)] for img in loader.mnistDataset.test_data])
 
     mnist.Y_train = np.array([ img.label for img in loader.mnistDataset.training_data])
     mnist.Y_valid = np.array([ img.label for img in loader.mnistDataset.validation_data])
@@ -136,7 +140,7 @@ def init():
     
     _, faces.featureVectorSize = faces.X_train.shape
 
-    if False:
+    if True:
         print(mnist.X_train.shape)
         print(mnist.X_valid.shape)
         print(mnist.X_test.shape)
