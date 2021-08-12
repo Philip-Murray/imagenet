@@ -1,5 +1,6 @@
 
 import numpy as np
+import features
 
 
 class Model:
@@ -9,18 +10,20 @@ class Model:
 
     def predict_batch(self, X_set, Y_set, report_progress=True):
         preds = []
-        for b in range(X_set.shape(0)):
+        for b in range(X_set.shape[0]):
             pred = self.predict(X_set[b])
             preds.append(pred)
 
         return np.array(preds)
 
-    def accuracy_test(self, X_set, Y_set, report_progress=True):
+    def accuracy_test(self, X_set, Y_set, report_progress=True, print_ans=False):
         error_sum = 0
         for b in range(Y_set.shape[0]):
             pred = self.predict(X_set[b])
             if pred != Y_set[b]:
                 error_sum += 1
+        if print_ans:
+            print("Accuracy: "+str(1-(error_sum / Y_set.shape[0])))
         return error_sum / Y_set.shape[0]
 
     def dims_assert(self, X_set, Y_set):
@@ -32,7 +35,16 @@ class Model:
     def predict(X):
         pass
 
-    
+
+class ModeDataParing:
+
+    def SetupPairs():
+        pass
+
+
+
+
+
 
 
 

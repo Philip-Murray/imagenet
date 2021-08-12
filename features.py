@@ -117,7 +117,7 @@ class faces:
             printNumpySubset(faces.X_test,  index, faces.dim_x, faces.dim_y)
 
 
-def init(): #Has hardcode hardcoded value
+def init(): 
 
     mnist.X_train = np.array([ mnistFeatureExtraction(img) for img in loader.mnistDataset.training_data])
     mnist.X_valid = np.array([ mnistFeatureExtraction(img) for img in loader.mnistDataset.validation_data])
@@ -144,14 +144,26 @@ def init(): #Has hardcode hardcoded value
     
     _, faces.featureVectorSize = faces.X_train.shape
 
-    if True:
+    if False:
         print(mnist.X_train.shape)
         print(mnist.X_valid.shape)
         print(mnist.X_test.shape)
-
+        print()
+        print(mnist.Y_train.shape)
+        print(mnist.Y_valid.shape)
+        print(mnist.Y_test.shape)
+        print()
+        print(faces.featureVectorSize)
+        print()
+        print()
         print(faces.X_train.shape)
         print(faces.X_valid.shape)
         print(faces.X_test.shape)
+        print()
+        print(faces.Y_train.shape)
+        print(faces.Y_valid.shape)
+        print(faces.Y_test.shape)
+        print()
 
         print(faces.featureVectorSize)
 

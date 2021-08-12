@@ -21,7 +21,6 @@ class mnistDataset: #namespace
     dim_y = 28
     dim_x = 28
 
-
 class faceDataset: #namespace
     training_data = []
     validation_data = []
