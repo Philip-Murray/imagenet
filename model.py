@@ -2,6 +2,10 @@
 import numpy as np
 import features
 
+BINARY = 0
+MULTI_CLASS = 1
+
+LRN = 0.4
 
 class Model:
     def __init__(self, inVectorSize: int, outVectorSize: int):
@@ -16,7 +20,7 @@ class Model:
 
         return np.array(preds)
 
-    def accuracy_test(self, X_set, Y_set, report_progress=True, print_ans=False):
+    def accuracy_test(self, X_set, Y_set, report_progress=False, print_ans=False):
         error_sum = 0
         for b in range(Y_set.shape[0]):
             pred = self.predict(X_set[b])
@@ -24,12 +28,12 @@ class Model:
                 error_sum += 1
         if print_ans:
             print("Accuracy: "+str(1-(error_sum / Y_set.shape[0])))
-        return error_sum / Y_set.shape[0]
+        return 1 - (error_sum / Y_set.shape[0])
 
     def dims_assert(self, X_set, Y_set):
         pass
 
-    def fit(self, X_set, Y_set, epochs, report_progress=True, collect_accuracy=True):
+    def fit(self, X_set, Y_set, epochs, report_progress=False, collect_accuracy=True):
         pass
 
     def predict(X):

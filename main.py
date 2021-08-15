@@ -1,10 +1,13 @@
+import pandas
+
 import sys, os, pickle
 import loader, features, persistence, model
-from ann import *
-from perceptron import *
-from bayes import *
+from algorithms.ann import *
+from algorithms.perceptron import *
+from algorithms.bayes import *
+from experiments import ExperimentContainer
 
-import perceptron
+
 
 
 A4_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -13,16 +16,10 @@ class g_params:
     session_filename = "default"
     session = None
 
+class Metrics:
+    pass
 
 
-def AddModelsToSession():
-    g_params.session.mnist_p = MultiClassPerceptron(features.mnist.featureVectorSize, 10)
-    g_params.session.mnist_b = MultiClassNaiveBayes(features.mnist.featureVectorSize, 10)
-    g_params.session.mnist_n = MultiClassNeuralNetwork(features.mnist.featureVectorSize, 10) #hardcode 
-
-    g_params.session.face_p = BinaryPerceptron(features.faces.featureVectorSize)
-    g_params.session.face_b = BinaryNaiveBayes(features.faces.featureVectorSize)
-    g_params.session.face_n = BinaryNeuralNetwork(features.faces.featureVectorSize)
 
 
 
@@ -39,8 +36,7 @@ def LoadSession(force_not_present=False):
     if os.path.exists(os.path.join(persistence.SAVE_DIR, g_params.session_filename)) and (not force_not_present):
         persistence.loadprogress(g_params.session_filename)
     else:
-        g_params.session = persistence.ModelSession()
-        AddModelsToSession()
+        g_params.session = persistence.NewSession()
 
 def SaveSession():
     persistence.saveprogress(g_params.session, g_params.session_filename)
@@ -49,15 +45,18 @@ def SetSaveFile(fname: str):
     g_params.session_filename = fname
 
 
+def Problem3Experiment():
+    return ExperimentContainer().run()
 
 
 
-def AllModelTrainingCycle(session: persistence.ModelSession, epochs_per_10p=3):
+def Testing1(session: persistence.ModelSession, epochs_per_10p=3):
     for i in range(1, 11):
         percent = (i*10)
         print("Training models to "+str(percent)+" percent of data:")
 
         frac = percent / 100
+
 
         mnist_training_length = features.mnist.X_train.shape[0]
         faces_training_length = features.faces.X_train.shape[0]
@@ -97,11 +96,10 @@ def main():
     LoadImages()
     LoadSession()
 
-    AllModelTrainingCycle(g_params.session, 1)
-
-
+    #Testing1(g_params.session, 1)
 
 main()
+Problem3Experiment()
 
 quit()
 #session = 

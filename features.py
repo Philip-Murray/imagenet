@@ -3,7 +3,6 @@ import numpy as np
 from   loader import AsciImage
 
 
-
 def mnistFeatureExtraction(img: AsciImage):
     def charmap(c: str):
         if c == " ":
@@ -12,7 +11,40 @@ def mnistFeatureExtraction(img: AsciImage):
             return 1
         if c == "+":
             return 1
-    return [charmap(pixel) for img_row in img.pixels for pixel in img_row] #Must be same size for any img in mnist set
+    mapping = [[charmap(c) for c in img_row] for img_row in img.pixels]
+
+
+    x_div = 2
+    y_div = 2
+    x_boxamt = int(loader.mnistDataset.dim_x / x_div)
+    y_boxamt = int(loader.mnistDataset.dim_y / y_div)
+
+    if  mfe_onetime.mfe_onetime:
+        mfe_onetime.mfe_onetime = False
+        mnist.dim_x = x_boxamt
+        mnist.dim_y = y_boxamt
+
+
+    tiles = []
+
+    for ybox in range(y_boxamt):
+        tiles.append([])
+        for xbox in range(x_boxamt):
+            sum = 0
+            for y in range(ybox*y_div, (1+ybox)*y_div):
+                for x in range(xbox*x_div, (1+xbox)*x_div):
+                    sum += mapping[y][x]
+            if(sum > 2):
+                sum = 1
+            else:
+                sum = 0
+
+            #avg = min(sum, 9)
+            tiles[ybox].append(sum)
+
+    return [aggregate for boxed_row in tiles for aggregate in boxed_row] #Must be same size for any img in face set
+    #return [charmap(pixel) for img_row in img.pixels for pixel in img_row] #Must be same size for any img in mnist set
+
 
 
 def faceFeatureExtraction(img: AsciImage):    
@@ -56,7 +88,8 @@ def faceFeatureExtraction(img: AsciImage):
 
 class ffe_onetime:
     ffe_onetime = True
-
+class mfe_onetime:
+    mfe_onetime = True
 
 
 
@@ -90,9 +123,6 @@ class mnist:
             printNumpySubset(mnist.X_valid, index, mnist.dim_x, mnist.dim_y)
         if set == "test" or set == 2:
             printNumpySubset(mnist.X_test,  index, mnist.dim_x, mnist.dim_y)
-
-
-
 
 class faces:
     featureVectorSize = None
