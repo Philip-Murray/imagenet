@@ -78,10 +78,9 @@ class MultiClassNaiveBayes(Model):
 
 
     def predict(self, Xv):
-        matrix_xj_given_yi1 = self.matrix_prob_xj1_given_yi1 * Xv + (self.matrix_prob_xj1_given_yi1 - 1) * (1 - Xv)
-        
-        likelyhood_Yi_vector = self.vector_prob_Yi * np.prod(matrix_xj_given_yi1, axis=1)
+        matrix_xj_given_yi1 = self.matrix_prob_xj1_given_yi1 * Xv + (1 - self.matrix_prob_xj1_given_yi1) * (1 - Xv)
 
+        likelyhood_Yi_vector = self.vector_prob_Yi * np.prod(matrix_xj_given_yi1, axis=1)
         return np.argmax(likelyhood_Yi_vector)      
 
     def fit(self, X_set, Y_set, epochs, report_progress=True, collect_accuracy=True):
@@ -91,14 +90,14 @@ class MultiClassNaiveBayes(Model):
             return
 
         vector_cases_yi1 = np.zeros(self.classifications)
-        matrix_cases_xi1_and_yi1 = np.zeros(self.classifications * self.features).reshape(self.classifications, self.features)
+        matrix_cases_xj1_and_yi1 = np.zeros(self.classifications * self.features).reshape(self.classifications, self.features)
 
         for b in range(X_set.shape[0]):
             
             y_act = Y_set[b]
             vector_cases_yi1[y_act] += 1
 
-            matrix_cases_xi1_and_yi1[y_act] += X_set[b]
+            matrix_cases_xj1_and_yi1[y_act] += X_set[b]
 
 
 
@@ -109,9 +108,14 @@ class MultiClassNaiveBayes(Model):
         self.matrix_prob_xj1_given_yi1 = np.zeros(self.classifications * self.features).reshape(self.classifications, self.features)
 
         for Yi in range(self.classifications):
-            self.matrix_prob_xj1_given_yi1[Yi] = matrix_cases_xi1_and_yi1[Yi] / vector_cases_yi1[Yi]
+            self.matrix_prob_xj1_given_yi1[Yi] = matrix_cases_xj1_and_yi1[Yi] / vector_cases_yi1[Yi]
 
-        
+
+
+
+
+
+
 
 
     def dims_assert(self, X_set, Y_set):
