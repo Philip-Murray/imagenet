@@ -14,7 +14,7 @@ class BinaryNeuralNetwork(Model):
     def __init__(self, inVectorSize):
         super().__init__(inVectorSize, 2)
 
-        hidden_amt = 156
+        hidden_amt = 40
 
         self.W1 = 2*np.random.rand(hidden_amt, inVectorSize) - 1
         self.W2 = 2*np.random.rand(1, hidden_amt) - 1
@@ -86,7 +86,7 @@ class MultiClassNeuralNetwork(Model):
     def __init__(self, inVectorSize, outVectorSize):
         super().__init__(inVectorSize, outVectorSize)
 
-        hidden_amt = 156
+        hidden_amt = 40
 
         self.W1 = 2*np.random.rand(hidden_amt, inVectorSize) - 1
         self.W2 = 2*np.random.rand(outVectorSize, hidden_amt) - 1
@@ -105,6 +105,8 @@ class MultiClassNeuralNetwork(Model):
         self.y_out = o(self.y_in)
 
         return np.argmax(self.y_out)
+      
+
       
 
     def fit(self, X_set, Y_set, epochs, report_progress=True, collect_accuracy=True):

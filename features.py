@@ -96,7 +96,9 @@ class mfe_onetime:
 
 def printNumpySubset(nparray, index, dim_x, dim_y):
     for i in range(dim_y):
-        print(nparray[index, i*dim_x : (i+1)*dim_x])
+        a = int(i*dim_x)
+        b = int((i+1)*dim_x)
+        print(nparray[int(index), a:b])
 
 
 
@@ -119,10 +121,12 @@ class mnist:
     def printImage(index: int, set="train"):
         if set == "train" or set == 0:
             printNumpySubset(mnist.X_train, index, mnist.dim_x, mnist.dim_y)
+            print("Label: "+str(mnist.Y_train[index]))
         if set == "valid" or set == 1:
             printNumpySubset(mnist.X_valid, index, mnist.dim_x, mnist.dim_y)
         if set == "test" or set == 2:
             printNumpySubset(mnist.X_test,  index, mnist.dim_x, mnist.dim_y)
+            print("Label: "+str(mnist.Y_test[index]))
 
 class faces:
     featureVectorSize = None
@@ -141,10 +145,12 @@ class faces:
     def printImage(index: int, set="train"):
         if set == "train" or set == 0:
             printNumpySubset(faces.X_train, index, faces.dim_x, faces.dim_y)
+            print("Label: "+str(faces.Y_train[index]))
         if set == "valid" or set == 1:
             printNumpySubset(faces.X_valid, index, faces.dim_x, faces.dim_y)
         if set == "test" or set == 2:
             printNumpySubset(faces.X_test,  index, faces.dim_x, faces.dim_y)
+            print("Label: "+str(faces.Y_test[index]))
 
 
 def init(): 

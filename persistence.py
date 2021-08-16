@@ -5,7 +5,7 @@ from algorithms.bayes import *
 
 
 A4_PATH = os.path.dirname(os.path.realpath(__file__))
-SAVE_DIR = os.path.join(A4_PATH, "savefiles")
+SAVE_DIR = os.path.join(A4_PATH, "/savefiles/")
 IMGDATA_FILE = os.path.join(A4_PATH, "imagedata.pickle") 
 
 
@@ -19,8 +19,8 @@ class ModelSession:
     def mnist_iterator(self):
         return self.model_array[3:6]
 
-    def get_model(self, model_type, model_id):
-        return self.model_array[3*model_type + model_id]
+    def get_model(self, dataset_type, model_id):
+        return self.model_array[3*dataset_type + model_id]
         
         
 
@@ -36,25 +36,16 @@ def NewSession():
     ns.face_n = BinaryNeuralNetwork(features.faces.featureVectorSize)
     
     ns.model_array = [ns.face_p, ns.face_b, ns.face_n,   ns.mnist_p, ns.mnist_b, ns.mnist_n]
-    ns.model_dict = {
-        0: ns.face_p,
-        1: ns.face_b,
-        2: ns.face_n,
-
-        3: ns.mnist_p,
-        4: ns.mnist_b,
-        5: ns.mnist_n
-    }
     return ns
 
 
-def saveprogress(session: ModelSession, filename="default"):
-    pickle_out = open(os.path.join(SAVE_DIR, filename, ".pickle"),"wb")
+def saveprogress(session: ModelSession, filename="default.pickle"):
+    pickle_out = open(os.path.join(SAVE_DIR, filename),"wb")
     pickle.dump(session, pickle_out)
     pickle_out.close()
     
 
-def loadprogress(filename="default"):
+def loadprogress(filename="default.pickle"):
     pickle_in = open(os.path.join(SAVE_DIR, filename, ".pickle"), "rb")
     session = pickle.load(pickle_in)
     return session

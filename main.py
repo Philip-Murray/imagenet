@@ -5,7 +5,8 @@ import loader, features, persistence, model
 from algorithms.ann import *
 from algorithms.perceptron import *
 from algorithms.bayes import *
-from experiments import ExperimentContainer
+from experiments import ExperimentContainer, TrainGlobalSessionModels
+import experiments
 
 
 
@@ -13,6 +14,7 @@ from experiments import ExperimentContainer
 A4_PATH = os.path.dirname(os.path.realpath(__file__))
 
 class g_params:
+    loader_ran = False
     session_filename = "default"
     session = None
 
@@ -37,6 +39,8 @@ def LoadSession(force_not_present=False):
         persistence.loadprogress(g_params.session_filename)
     else:
         g_params.session = persistence.NewSession()
+        tg = TrainGlobalSessionModels(100, g_params.session)
+        tg.run(report_progress=False)
 
 def SaveSession():
     persistence.saveprogress(g_params.session, g_params.session_filename)
@@ -45,78 +49,88 @@ def SetSaveFile(fname: str):
     g_params.session_filename = fname
 
 
-def Problem3Experiment():
-    return ExperimentContainer().run()
 
-
-
-def Testing1(session: persistence.ModelSession, epochs_per_10p=3):
-    for i in range(1, 11):
-        percent = (i*10)
-        print("Training models to "+str(percent)+" percent of data:")
-
-        frac = percent / 100
-
-
-        mnist_training_length = features.mnist.X_train.shape[0]
-        faces_training_length = features.faces.X_train.shape[0]
-
-        mX_train = features.mnist.X_train[0:int(frac * mnist_training_length)]
-        mY_train = features.mnist.Y_train[0:int(frac * mnist_training_length)]
-
-        fX_train = features.faces.X_train[0:int(frac * faces_training_length)]
-        fY_train = features.faces.Y_train[0:int(frac * faces_training_length)]
-
-
-        session.mnist_p.fit(mX_train, mY_train, epochs_per_10p)
-        session.mnist_b.fit(mX_train, mY_train, epochs_per_10p)
-        session.mnist_n.fit(mX_train, mY_train, 3)
-
-        session.face_p.fit(fX_train, fY_train, epochs_per_10p)
-        session.face_b.fit(fX_train, fY_train, epochs_per_10p)
-        session.face_n.fit(fX_train, fY_train, 3)
-        print()
-        print()
-
-    print()
-    print("Accuracy testing")
-
-    session.mnist_p.accuracy_test(features.mnist.X_test, features.mnist.Y_test, print_ans=True)
-    session.mnist_b.accuracy_test(features.mnist.X_test, features.mnist.Y_test, print_ans=True)
-    session.mnist_n.accuracy_test(features.mnist.X_test, features.mnist.Y_test, print_ans=True)
-
-    session.face_p.accuracy_test(features.faces.X_test, features.faces.Y_test, print_ans=True)
-    session.face_b.accuracy_test(features.faces.X_test, features.faces.Y_test, print_ans=True)
-    session.face_n.accuracy_test(features.faces.X_test, features.faces.Y_test, print_ans=True)
-
-
-
-
-def main():
+def main_loader():
+    if g_params.loader_ran:
+        return
+    g_params.loader_ran = True
     LoadImages()
-    LoadSession()
-
-    #Testing1(g_params.session, 1)
-
-main()
-Problem3Experiment()
-
-quit()
-#session = 
-
-#features.faces.printImage(0)
-#loader.mnistDataset.test_data[0].print()
-#loader.mnistDataset.test_data[0].print()
-#loader.faceDataset.test_data[0].print()
+    #LoadSession()
 
 
-A4_PATH = os.path.dirname(os.path.realpath(__file__))
 
-fn  = os.path.join(A4_PATH, "data/data/facedata/facedatatrain")
+def Problem3Experiment(epochs=1):
+    main_loader()
+    return ExperimentContainer().run(epochs)
 
-f = open(fn, "r")
 
+main_loader()
 
-u = f.readline()
+if len(sys.argv) > 1:
+    arg2 = sys.argv[1]
 
-print(len(u))
+    if sys.argv[1] == "image":
+        if sys.argv[2] == "mnist":
+            if sys.argv[3] == "train":
+                loader.mnistDataset.training_data[int(sys.argv[4])].print()
+                print("Label: "+str(loader.mnistDataset.training_data[int(sys.argv[4])].label))
+            else:
+                loader.mnistDataset.test_data[int(sys.argv[4])].print()
+                print("Label: "+str(loader.mnistDataset.test_data[int(sys.argv[4])].label))
+
+        if sys.argv[2] == "faces":
+            if sys.argv[3] == "train":
+                loader.faceDataset.training_data[int(sys.argv[4])].print()
+                print("Label: "+str(loader.faceDataset.training_data[int(sys.argv[4])].label))
+            else:
+                loader.faceDataset.test_data[int(sys.argv[4])].print()
+                print("Label: "+str(loader.faceDataset.test_data[int(sys.argv[4])].label))
+
+    if sys.argv[1] == "feature":
+        if sys.argv[2] == "mnist":
+            if sys.argv[3] == "train":
+                features.mnist.printImage(sys.argv[4], "train")
+            else:
+                features.mnist.printImage(sys.argv[4], "test")
+
+        if sys.argv[2] == "faces":
+            if sys.argv[3] == "train":
+                features.faces.printImage(sys.argv[4], "train")
+            else:
+                features.faces.printImage(sys.argv[4], "test")
+
+    if sys.argv[1] == "session":
+        try:
+            percent = int(sys.argv[1])
+        except:
+            percent = 100
+        g_params.session = persistence.NewSession()
+        print("Training models on "+str(percent)+chr(37)+" of datasets.")
+
+        tg = TrainGlobalSessionModels(percent, g_params.session)
+        tg.run(report_progress=True)
+        #SaveSession()
+
+        for line in sys.stdin:
+            j = line.split(" ")
+            first = int(j[2])
+            last = first + 1
+            if len(j) == 4:
+                last = int(j[3]) + 1
+            
+            datasetv = 0
+            if j[0] == "mnist":
+                datasetv = 1
+            
+            modeltype = 0
+            if j[1] == "nb":
+                modeltype = 1
+            if j[1] == "ann" or j[1] == "nn":
+                modeltype = 2
+
+            experiments.TestGlobalModel(g_params.session, datasetv, modeltype, first, last)
+
+    if sys.argv[1] == "experiment":
+        Problem3Experiment()
+else:
+    print("Please issue a command. Commands may be found in latex pdf.")

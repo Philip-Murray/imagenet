@@ -82,13 +82,13 @@ def nt_ReadFaceData_Test():
     data_filepath  = os.path.join(A4_PATH, "data/data/facedata/facedatavalidation")
     lbls_filepath  = os.path.join(A4_PATH, "data/data/facedata/facedatavalidationlabels")
 
-    imageLoader(faceDataset.dim_y, data_filepath, lbls_filepath, faceDataset.test_data)
+    imageLoader(faceDataset.dim_y, data_filepath, lbls_filepath, faceDataset.validation_data)
 
 def nt_ReadFaceData_Valid():
     data_filepath  = os.path.join(A4_PATH, "data/data/facedata/facedatatest")
     lbls_filepath  = os.path.join(A4_PATH, "data/data/facedata/facedatatestlabels")
 
-    imageLoader(faceDataset.dim_y, data_filepath, lbls_filepath, faceDataset.validation_data) 
+    imageLoader(faceDataset.dim_y, data_filepath, lbls_filepath, faceDataset.test_data) 
 
 
 
