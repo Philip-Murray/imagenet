@@ -38,12 +38,8 @@ class BinaryNeuralNetwork(Model):
             return 1
       
 
-    def fit(self, X_set, Y_set, epochs, report_progress=True, collect_accuracy=True):
-
+    def fit(self, X_set, Y_set, epochs):
         lrn = model.LRN
-        if X_set.shape[1] != self.features:
-            print("ERROR - invalid dataset dims for model input")
-            return
 
         for epoch in range(epochs):
             err_count = 0
@@ -69,6 +65,9 @@ class BinaryNeuralNetwork(Model):
                 self.W2 -= lrn * dE_dW2
                 self.b1 -= lrn * dE_db1
                 self.b2 -= lrn * dE_db2
+
+
+
             #print("Bi_NN - Epoch "+str(epoch)+", accuracy = "+str(1-(err_count / X_set.shape[0]))+" ")
 
 

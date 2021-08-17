@@ -27,11 +27,7 @@ class BinaryNaiveBayes(Model):
         else:
             return 0        
 
-    def fit(self, X_set, Y_set, epochs, report_progress=True, collect_accuracy=True):
-
-        if X_set.shape[1] != self.features:
-            print("ERROR - invalid dataset dims for model input")
-            return
+    def fit(self, X_set, Y_set, epochs):
 
         cases_y1 = 0
 
@@ -83,7 +79,7 @@ class MultiClassNaiveBayes(Model):
         likelyhood_Yi_vector = self.vector_prob_Yi * np.prod(matrix_xj_given_yi1, axis=1)
         return np.argmax(likelyhood_Yi_vector)      
 
-    def fit(self, X_set, Y_set, epochs, report_progress=True, collect_accuracy=True):
+    def fit(self, X_set, Y_set, epochs):
 
         if X_set.shape[1] != self.features:
             print("ERROR - invalid dataset dims for model input")
@@ -109,6 +105,10 @@ class MultiClassNaiveBayes(Model):
 
         for Yi in range(self.classifications):
             self.matrix_prob_xj1_given_yi1[Yi] = matrix_cases_xj1_and_yi1[Yi] / vector_cases_yi1[Yi]
+
+
+
+
 
 
 
