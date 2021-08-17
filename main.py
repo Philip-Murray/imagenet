@@ -23,6 +23,8 @@ def LoadImages(force_not_present=False, save_copy_if_not_present=True):
     if os.path.exists(persistence.IMGDATA_FILE) and (not force_not_present):
         persistence.loaddatabase()
     else:
+        print("Image cache not found, loading images from files.")
+        print()
         loader.nt_init()
         features.init()
         if save_copy_if_not_present:
@@ -80,7 +82,7 @@ if len(sys.argv) > 1:
 
     if sys.argv[1] == "session":
         try:
-            percent = int(sys.argv[1])
+            percent = int(sys.argv[2])
         except:
             percent = 100
         g_params.session = persistence.NewSession()
