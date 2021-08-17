@@ -224,7 +224,8 @@ def TestGlobalModel(sess, ds, mt, f, l):
         cr = "[INCORRECT]"
         if yt[i-f] == z:
             cr = "[CORRECT]"
-        print(reflect_dataset[ds]+" test image "+str(i)+": Actual: "+str(int(yt[i-f]))+" Predicted: "+str(int(z))+" "+cr)
+        print(reflect_dataset[ds]+" test image "+str(i)+", "+reflect_classifier[mt]+": Actual: "+str(int(yt[i-f]))+" Predicted: "+str(int(z))+" "+cr)
+    print()
 
     
 

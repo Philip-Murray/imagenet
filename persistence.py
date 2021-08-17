@@ -39,33 +39,6 @@ def NewSession():
     return ns
 
 
-def saveprogress(session: ModelSession, filename="default.pickle"):
-    pickle_out = open(os.path.join(SAVE_DIR, filename),"wb")
-    pickle.dump(session, pickle_out)
-    pickle_out.close()
-    
-
-def loadprogress(filename="default.pickle"):
-    pickle_in = open(os.path.join(SAVE_DIR, filename, ".pickle"), "rb")
-    session = pickle.load(pickle_in)
-    return session
-
-
-class ExperimentData:
-    def __init__(self, x):
-        pass
-
-def saveexperiment(session: ModelSession, filename="default"):
-    pickle_out = open(os.path.join(SAVE_DIR, filename, ".pickle"),"wb")
-    pickle.dump(session, pickle_out)
-    pickle_out.close()
-    
-
-def loadexperiment(filename="default"):
-    pickle_in = open(os.path.join(SAVE_DIR, filename, ".pickle"), "rb")
-    session = pickle.load(pickle_in)
-    return session
-
 
 
 

@@ -18,12 +18,6 @@ class g_params:
     session_filename = "default"
     session = None
 
-class Metrics:
-    pass
-
-
-
-
 
 def LoadImages(force_not_present=False, save_copy_if_not_present=True):
     if os.path.exists(persistence.IMGDATA_FILE) and (not force_not_present):
@@ -34,19 +28,6 @@ def LoadImages(force_not_present=False, save_copy_if_not_present=True):
         if save_copy_if_not_present:
             persistence.savedatabase()
 
-def LoadSession(force_not_present=False):
-    if os.path.exists(os.path.join(persistence.SAVE_DIR, g_params.session_filename)) and (not force_not_present):
-        persistence.loadprogress(g_params.session_filename)
-    else:
-        g_params.session = persistence.NewSession()
-        tg = TrainGlobalSessionModels(100, g_params.session)
-        tg.run(report_progress=False)
-
-def SaveSession():
-    persistence.saveprogress(g_params.session, g_params.session_filename)
-
-def SetSaveFile(fname: str):
-    g_params.session_filename = fname
 
 
 
@@ -55,16 +36,14 @@ def main_loader():
         return
     g_params.loader_ran = True
     LoadImages()
-    #LoadSession()
-
-
 
 def Problem3Experiment(epochs=1):
     main_loader()
     return ExperimentContainer().run(epochs)
 
-
 main_loader()
+
+
 
 if len(sys.argv) > 1:
     arg2 = sys.argv[1]
