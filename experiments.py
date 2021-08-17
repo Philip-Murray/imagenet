@@ -145,14 +145,10 @@ class TrainGlobalSessionModels:
         def announce(rp, d):
             if d == FACES and rp:
                 print()
-                print()
                 print("FACES Dataset ---")
-                print()
             if d == MNIST and rp:
                 print()
-                print()
                 print("MNIST Dataset ---")
-                print()
 
             
         def report(dataset, classifier, percent, accuracies, runtime):
@@ -166,7 +162,7 @@ class TrainGlobalSessionModels:
             rc = reflect_classifier[classifier]
             rd = reflect_dataset[dataset]
             print(str(percent)+chr(37)+" of "+rd+" - "+ra+" "+rc+":")
-            print("train_time="+str(round(avg_t*1000, 2))+"ms,  accuracy="+str(round(avg*100, 2))+chr(37)+" std="+str(round(sdv*100, 2)))
+            print("train_time="+str(round(avg_t*1000, 2))+"ms,  accuracy="+str(round(avg*100, 2))+chr(37))
             print()
 
 
@@ -203,7 +199,7 @@ class TrainGlobalSessionModels:
 
                     if report_progress:
                         report(DATASET, classifier, percent, accs, ts)
-                if report_progress:
+                if report_progress and False:
                     print()
                     print()
 

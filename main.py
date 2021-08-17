@@ -69,7 +69,7 @@ main_loader()
 if len(sys.argv) > 1:
     arg2 = sys.argv[1]
 
-    if sys.argv[1] == "image":
+    if sys.argv[1] == "images":
         if sys.argv[2] == "mnist":
             if sys.argv[3] == "train":
                 loader.mnistDataset.training_data[int(sys.argv[4])].print()
@@ -86,18 +86,18 @@ if len(sys.argv) > 1:
                 loader.faceDataset.test_data[int(sys.argv[4])].print()
                 print("Label: "+str(loader.faceDataset.test_data[int(sys.argv[4])].label))
 
-    if sys.argv[1] == "feature":
+    if sys.argv[1] == "features":
         if sys.argv[2] == "mnist":
             if sys.argv[3] == "train":
-                features.mnist.printImage(sys.argv[4], "train")
+                features.mnist.printImage(int(sys.argv[4]), "train")
             else:
-                features.mnist.printImage(sys.argv[4], "test")
+                features.mnist.printImage(int(sys.argv[4]), "test")
 
         if sys.argv[2] == "faces":
             if sys.argv[3] == "train":
-                features.faces.printImage(sys.argv[4], "train")
+                features.faces.printImage(int(sys.argv[4]), "train")
             else:
-                features.faces.printImage(sys.argv[4], "test")
+                features.faces.printImage(int(sys.argv[4]), "test")
 
     if sys.argv[1] == "session":
         try:
@@ -113,6 +113,9 @@ if len(sys.argv) > 1:
 
         for line in sys.stdin:
             j = line.split(" ")
+            if j[0] == "quit" or j[0] == "quit\n":
+                quit()
+
             first = int(j[2])
             last = first + 1
             if len(j) == 4:

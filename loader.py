@@ -9,7 +9,10 @@ class AsciImage:
 
     def print(self):
         for img_row in self.pixels:
-            print(img_row)
+            u = ""
+            for pix in img_row:
+                u += pix
+            print(u)
 
 
 
